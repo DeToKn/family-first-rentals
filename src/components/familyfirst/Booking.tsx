@@ -99,7 +99,9 @@ const Booking = () => {
       await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_NOTIFICATION, templateVars, EMAILJS_PUBLIC_KEY);
       await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_CONFIRMATION, templateVars, EMAILJS_PUBLIC_KEY);
 
-      toast.success("Booking request sent! We'll be in touch soon.");
+      toast.success("Booking request sent! Check your email — if you don't see it, check spam and add bookus@familyfirstatl.com to your contacts.", {
+  duration: 8000,
+});
       setForm(initial);
       setItems([]);
       setPreselectedPackage("");

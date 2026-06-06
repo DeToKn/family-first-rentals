@@ -1,24 +1,36 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { isSameDay, format } from "date-fns";
 import { Calendar } from "@/components/ui/calendar";
 import SectionHeader from "./SectionHeader";
 import { useBookingPrefill, scrollToBooking } from "./BookingContext";
 import { toast } from "sonner";
-
-const BOOKED_DATES = [
-  new Date(2026, 5, 14),
-  new Date(2026, 5, 21),
-  new Date(2026, 5, 28),
-  new Date(2026, 6, 4),
-  new Date(2026, 6, 12),
-];
-
-const isBooked = (date: Date) => BOOKED_DATES.some((d) => isSameDay(d, date));
+import { supabase } from "@/integrations/client";
 
 const Availability = () => {
   const [month, setMonth] = useState<Date>(new Date(2026, 5, 1));
   const [selected, setSelected] = useState<Date | undefined>();
+  const [bookedDates, setBookedDates] = useState<Date[]>([]);
   const { setPreselectedDate } = useBookingPrefill();
+
+  useEffect(() => {
+    const fetchBookedDates = async () => {
+      const { data, error } = await supabase
+        .from("booking_requests")
+        .select("event_date")
+        .not("event_date", "is", null);
+      if (error) {
+        console.error("Failed to load booked dates:", error);
+        return;
+      }
+      const dates = data
+        .map((row) => new Date(row.event_date + "T12:00:00"))
+        .filter((d) => !isNaN(d.getTime()));
+      setBookedDates(dates);
+    };
+    fetchBookedDates();
+  }, []);
+
+  const isBooked = (date: Date) => bookedDates.some((d) => isSameDay(d, date));
 
   const handleSelect = (date: Date | undefined) => {
     if (!date) return;
@@ -46,7 +58,7 @@ const Availability = () => {
             onMonthChange={setMonth}
             disabled={isBooked}
             modifiers={{
-              booked: BOOKED_DATES,
+              booked: bookedDates,
               available: (date) => !isBooked(date),
             }}
             modifiersClassNames={{
