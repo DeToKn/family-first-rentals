@@ -39,6 +39,8 @@ const Booking = () => {
   const [form, setForm] = useState(initial);
   const [items, setItems] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
+  const [honeypot, setHoneypot] = useState("");
+  const [lastSubmit, setLastSubmit] = useState(0);
 
   useEffect(() => {
     if (preselectedPackage) {
@@ -58,7 +60,17 @@ const Booking = () => {
     setItems((prev) => (prev.includes(it) ? prev.filter((x) => x !== it) : [...prev, it]));
   };
 
-  const submit = async () => {
+ const submit = async () => {
+    // Honeypot check — bots fill this, humans don't
+    if (honeypot) return;
+
+    // Cooldown check — prevent resubmission within 60 seconds
+    const now = Date.now();
+    if (now - lastSubmit < 60000) {
+      toast.error("Please wait a moment before submitting again.");
+      return;
+    }
+    setLastSubmit(now);
     const parsed = schema.safeParse(form);
     if (!parsed.success) {
       const first = Object.values(parsed.error.flatten().fieldErrors)[0]?.[0];
@@ -180,6 +192,16 @@ const Booking = () => {
               />
             </Field>
           </div>
+          {/* Honeypot — hidden from humans, bots fill it in */}
+          <input
+            type="text"
+            value={honeypot}
+            onChange={(e) => setHoneypot(e.target.value)}
+            style={{ display: "none" }}
+            tabIndex={-1}
+            autoComplete="off"
+            aria-hidden="true"
+          />
           <button onClick={submit} disabled={loading} className="ff-btn-gold w-full mt-8 !py-4 text-sm">
             {loading ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : null}
             {loading ? "Sending..." : "Send Booking Request ✦"}
