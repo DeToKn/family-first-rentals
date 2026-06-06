@@ -5,7 +5,12 @@ import { Loader2 } from "lucide-react";
 import SectionHeader from "./SectionHeader";
 import { useBookingPrefill } from "./BookingContext";
 import { supabase } from "@/integrations/client";
+import emailjs from "@emailjs/browser";
 
+const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+const EMAILJS_TEMPLATE_NOTIFICATION = import.meta.env.VITE_EMAILJS_TEMPLATE_NOTIFICATION;
+const EMAILJS_TEMPLATE_CONFIRMATION = import.meta.env.VITE_EMAILJS_TEMPLATE_CONFIRMATION;
+const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
 const schema = z.object({
   first_name: z.string().trim().min(1, "Required").max(80),
   last_name: z.string().trim().min(1, "Required").max(80),
@@ -76,6 +81,24 @@ const Booking = () => {
         notes: parsed.data.notes || null,
       });
       if (error) throw error;
+
+      const templateVars = {
+        customer_name:    `${parsed.data.first_name} ${parsed.data.last_name}`,
+        customer_phone:   parsed.data.phone,
+        customer_email:   parsed.data.email,
+        event_date:       parsed.data.event_date || "Not specified",
+        event_type:       parsed.data.event_type || "Not specified",
+        guest_count:      parsed.data.guest_count || "Not specified",
+        package_interest: parsed.data.package_interest || "Not specified",
+        event_location:   parsed.data.event_location || "Not specified",
+        items_needed:     items.length > 0 ? items.join(", ") : "Not specified",
+        notes:            parsed.data.notes || "None",
+        submitted_at:     new Date().toLocaleString("en-US", { dateStyle: "full", timeStyle: "short" }),
+      };
+
+      await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_NOTIFICATION, templateVars, EMAILJS_PUBLIC_KEY);
+      await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_CONFIRMATION, templateVars, EMAILJS_PUBLIC_KEY);
+
       toast.success("Booking request sent! We'll be in touch soon.");
       setForm(initial);
       setItems([]);
