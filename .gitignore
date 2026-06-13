@@ -43,4 +43,4 @@ node_modules/.vite
 # Temp
 *.tmp
 *.temp
-coverage/
+coverage/dist
