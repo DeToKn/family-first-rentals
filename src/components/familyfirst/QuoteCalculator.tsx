@@ -4,9 +4,9 @@ import SectionHeader from "./SectionHeader";
 type ItemKey = "chairs" | "rect" | "round";
 
 const ITEMS: { key: ItemKey; name: string; unit: string; price: number }[] = [
-  { key: "chairs", name: "Metal Black Chairs", unit: "per chair", price: 2.5 },
-  { key: "rect", name: "4 ft Rectangular Tables", unit: "per table", price: 12 },
-  { key: "round", name: "Round Tables", unit: "per table", price: 18 },
+  { key: "chairs", name: "Metal Black Chairs", unit: "per chair", price: 6 },
+  { key: "rect", name: "4 ft Rectangular Tables", unit: "per table", price: 10 },
+  { key: "round", name: "Round Tables", unit: "per table", price: 10 },
 ];
 
 const fmt = (n: number) =>

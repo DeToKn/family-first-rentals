@@ -14,7 +14,7 @@ const Availability = () => {
 
   useEffect(() => {
     const fetchBookedDates = async () => {
-      const { data, error } = await supabase
+      const { data, error } = await (supabase as any)
         .from("public_booked_dates")
         .select("event_date");
       if (error) {

@@ -7,7 +7,7 @@ const items = [
   {
     img: chairImg,
     name: "Metal Black Chairs",
-    price: "$2.50",
+    price: "$6",
     unit: "/ chair / day",
     desc: "Sturdy, stylish, and reliable. Black metal folding chairs that elevate any event setup.",
     tags: ["Sturdy", "Stylish", "Min. 10"],
@@ -15,7 +15,7 @@ const items = [
   {
     img: rectTableImg,
     name: "4 ft Rectangular Tables",
-    price: "$12",
+    price: "$10",
     unit: "/ table / day",
     desc: "Seats 4 guests. Perfect for food stations, gift tables, banquets, and any occasion.",
     tags: ["Seats 4", "Versatile", "Min. 2"],
@@ -23,7 +23,7 @@ const items = [
   {
     img: roundTableImg,
     name: "Round Tables",
-    price: "$18",
+    price: "$10",
     unit: "/ table / day",
     desc: "Seats up to 8 guests. Creates an elegant, connected dining experience for large gatherings.",
     tags: ["Seats 8", "Elegant", "Min. 2"],

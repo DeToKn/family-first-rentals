@@ -314,3 +314,8 @@ cd /mnt/d/FamilyFirstWebsite
 
 *Documentation created during development session*
 *Next: Open new chat for EmailJS integration — Phase 2*
+
+- Added items_needed column to booking_requests
+- Fixed duplicate supabase import in Booking.tsx
+- Fixed import path from integrations/supabase/client 
+  to integrations/client
