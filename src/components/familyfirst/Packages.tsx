@@ -5,29 +5,20 @@ const packages = [
   {
     name: "Starter Pack",
     sub: "Small Gatherings",
-    price: 95,
-    save: "Save $12.50",
-    items: ["25 Metal Black Chairs", "5 Rectangular Tables (4ft)", "Seats up to 20 guests", "Birthdays & Baby Showers", "Cookouts & Small Parties"],
+    price: 80,
+    save: "Seats up to 10",
+    items: ["10 Metal Black Chairs", "2 Rectangular Tables (4ft)", "Seats up to 10 guests", "Birthdays & Baby Showers", "Cookouts & Small Parties"],
     featured: false,
-    value: "Starter Pack – $95",
+    value: "Starter Pack – $80",
   },
   {
     name: "Party Pack",
     sub: "Medium Events",
-    price: 245,
-    save: "Save $47",
-    items: ["50 Metal Black Chairs", "8 Rectangular Tables (4ft)", "4 Round Tables (seats 8)", "Seats up to 50 guests", "School Events & Parties"],
+    price: 240,
+    save: "Seats up to 30",
+    items: ["30 Metal Black Chairs", "6 Rectangular Tables (4ft)", "Seats up to 30 guests", "Graduations & Parties", "School & Church Events"],
     featured: true,
-    value: "Party Pack – $245",
-  },
-  {
-    name: "Full Event Pack",
-    sub: "Large Celebrations",
-    price: 430,
-    save: "Save $90",
-    items: ["100 Metal Black Chairs", "10 Rectangular Tables (4ft)", "10 Round Tables (seats 8)", "Seats up to 100+ guests", "Corporate & Large Events"],
-    featured: false,
-    value: "Full Event Pack – $430",
+    value: "Party Pack – $240",
   },
 ];
 
@@ -42,7 +33,7 @@ const Packages = () => {
     <section id="packages" className="py-16 md:py-20 px-4 sm:px-6 bg-[hsl(var(--card))]">
       <div className="max-w-6xl mx-auto">
         <SectionHeader eyebrow="Best Value" title="Event Packages" />
-        <div className="grid md:grid-cols-3 gap-6 items-stretch">
+        <div className="grid md:grid-cols-2 gap-6 items-stretch max-w-3xl mx-auto">
           {packages.map((p) => (
             <div
               key={p.name}
